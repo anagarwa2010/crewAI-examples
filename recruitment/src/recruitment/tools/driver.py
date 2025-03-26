@@ -8,13 +8,12 @@ from selenium.common.exceptions import (
     NoSuchElementException, TimeoutException, WebDriverException
 )
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.common.by import By
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+  
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from typing import List, Optional # Added for type hinting
@@ -137,12 +136,13 @@ class Driver:
     def _create_driver(self, url, cookie) -> Optional[webdriver.Firefox]:
         
 
-        firefox_options = Options()
-        # Uncomment the line below if you want to run in headless mode
-        firefox_options.add_argument("--headless")
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+        chrome_options.add_argument("--no-sandbox")  # Bypass OS security restrictions
+        chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
 
-        # Setup WebDriver service
-        service = Service(GeckoDriverManager().install())
+        service = Service(ChromeDriverManager().install())
+       
 
         # Create WebDriver instance
         
@@ -154,8 +154,8 @@ class Driver:
 
         driver = None
         try:
-            print("Initializing Firefox WebDriver...")
-            driver = webdriver.Firefox(service=service, options=firefox_options)
+            print("Initializing Chrome WebDriver...")
+            driver = webdriver.Chrome(service=service, options=chrome_options)
             print("WebDriver initialized. Navigating to initial URL...")
             driver.get(url) # Initial navigation
             print(f"Initial navigation to {url} complete.")
