@@ -131,11 +131,12 @@ class Driver:
     def _create_driver(self, url, cookie) -> Optional[webdriver.Firefox]:
         options = Options()
         options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
+        #options.add_argument("--no-sandbox")
+        #options.add_argument("--disable-dev-shm-usage")
 
         service = None
         if self.geckodriver_path:
+             print("Assigning the service:({self.geckodriver_path})")
              service = FirefoxService(executable_path=self.geckodriver_path)
 
         driver = None
