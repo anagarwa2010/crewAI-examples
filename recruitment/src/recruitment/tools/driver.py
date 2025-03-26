@@ -16,7 +16,7 @@ def install_dependencies():
     subprocess.check_call(["apt-get", "update"])
     subprocess.check_call(["apt-get", "install", "-y", "firefox"])
     # Download and install geckodriver
-    geckodriver_version = "v0.34.0" # Check for the latest version if needed
+    geckodriver_version = "v0.36.0" # Check for the latest version if needed
     geckodriver_url = f"https://github.com/mozilla/geckodriver/releases/download/{geckodriver_version}/geckodriver-{geckodriver_version}-linux64.tar.gz"
     subprocess.check_call(["wget", geckodriver_url])
     subprocess.check_call(["tar", "-xvzf", f"geckodriver-{geckodriver_version}-linux64.tar.gz"])
