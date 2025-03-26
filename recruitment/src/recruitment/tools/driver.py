@@ -11,6 +11,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from typing import List, Optional # Added for type hinting
 
 # Function to install dependencies in Colab
@@ -129,20 +135,27 @@ class Driver:
 
 
     def _create_driver(self, url, cookie) -> Optional[webdriver.Firefox]:
-        options = Options()
-        options.add_argument("--headless")
-        #options.add_argument("--no-sandbox")
-        #options.add_argument("--disable-dev-shm-usage")
+        
 
-        service = None
-        if self.geckodriver_path:
-             print("Assigning the service:({self.geckodriver_path})")
-             service = FirefoxService(executable_path=self.geckodriver_path)
+        firefox_options = Options()
+        # Uncomment the line below if you want to run in headless mode
+        firefox_options.add_argument("--headless")
+
+        # Setup WebDriver service
+        service = Service(GeckoDriverManager().install())
+
+        # Create WebDriver instance
+        
+
+        # service = None
+        # if self.geckodriver_path:
+        #      print("Assigning the service:({self.geckodriver_path})")
+        #      service = FirefoxService(executable_path=self.geckodriver_path)
 
         driver = None
         try:
             print("Initializing Firefox WebDriver...")
-            driver = webdriver.Firefox(options=options, service=service)
+            driver = webdriver.Firefox(service=service, options=firefox_options)
             print("WebDriver initialized. Navigating to initial URL...")
             driver.get(url) # Initial navigation
             print(f"Initial navigation to {url} complete.")
