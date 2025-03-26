@@ -20,39 +20,39 @@ from selenium.webdriver.support import expected_conditions as EC
 from typing import List, Optional # Added for type hinting
 
 # Function to install dependencies in Colab
-def install_dependencies():
-    """Installs firefox and geckodriver for Selenium."""
-    print("Installing Firefox and GeckoDriver...")
-    try:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "selenium"])
-        subprocess.check_call(["apt-get", "update"])
-        subprocess.check_call(["apt-get", "install", "-y", "firefox"])
-        # Download and install geckodriver
-        geckodriver_version = "v0.36.0" # Check for the latest version if needed
-        geckodriver_url = f"https://github.com/mozilla/geckodriver/releases/download/{geckodriver_version}/geckodriver-{geckodriver_version}-linux64.tar.gz"
-        subprocess.check_call(["wget", geckodriver_url])
-        subprocess.check_call(["tar", "-xvzf", f"geckodriver-{geckodriver_version}-linux64.tar.gz"])
-        # Make geckodriver executable
-        st = os.stat("geckodriver")
-        os.chmod("geckodriver", st.st_mode | stat.S_IEXEC)
-        print("Installation complete.")
-        return os.path.abspath("geckodriver") # Return the absolute path
-    except subprocess.CalledProcessError as e:
-        print(f"Error during dependency installation: {e}", file=sys.stderr)
-        return None
-    except FileNotFoundError as e:
-         print(f"Error: 'wget' or 'tar' command not found. Please ensure they are installed. {e}", file=sys.stderr)
-         return None
+# def install_dependencies():
+#     """Installs firefox and geckodriver for Selenium."""
+#     print("Installing Firefox and GeckoDriver...")
+#     try:
+#         subprocess.check_call([sys.executable, "-m", "pip", "install", "selenium"])
+#         subprocess.check_call(["apt-get", "update"])
+#         subprocess.check_call(["apt-get", "install", "-y", "firefox"])
+#         # Download and install geckodriver
+#         geckodriver_version = "v0.36.0" # Check for the latest version if needed
+#         geckodriver_url = f"https://github.com/mozilla/geckodriver/releases/download/{geckodriver_version}/geckodriver-{geckodriver_version}-linux64.tar.gz"
+#         subprocess.check_call(["wget", geckodriver_url])
+#         subprocess.check_call(["tar", "-xvzf", f"geckodriver-{geckodriver_version}-linux64.tar.gz"])
+#         # Make geckodriver executable
+#         st = os.stat("geckodriver")
+#         os.chmod("geckodriver", st.st_mode | stat.S_IEXEC)
+#         print("Installation complete.")
+#         return os.path.abspath("geckodriver") # Return the absolute path
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error during dependency installation: {e}", file=sys.stderr)
+#         return None
+#     except FileNotFoundError as e:
+#          print(f"Error: 'wget' or 'tar' command not found. Please ensure they are installed. {e}", file=sys.stderr)
+#          return None
 
 class Driver:
     def __init__(self, url, cookie=None):
         self.driver: Optional[webdriver.Firefox] = None # Initialize driver as None
         self.geckodriver_path: Optional[str] = None
-        self.geckodriver_path = install_dependencies()
+        #self.geckodriver_path = install_dependencies()
         # If installation failed in Colab, don't proceed
-        if not self.geckodriver_path:
-            print("Failed to set up GeckoDriver in Colab. Driver not initialized.", file=sys.stderr)
-            return # Stop initialization
+        # if not self.geckodriver_path:
+        #     print("Failed to set up GeckoDriver in Colab. Driver not initialized.", file=sys.stderr)
+        #     return # Stop initialization
 
         self.driver = self._create_driver(url, cookie)
 
