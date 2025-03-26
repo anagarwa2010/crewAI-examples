@@ -31,8 +31,8 @@ class Driver:
         # --- Added for Colab ---
         # Check if running in Colab and install dependencies if necessary
         self.geckodriver_path = None
-        if 'google.colab' in sys.modules:
-             self.geckodriver_path = install_dependencies()
+        
+        self.geckodriver_path = install_dependencies()
         # -----------------------
         self.driver = self._create_driver(url, cookie)
 
