@@ -3,15 +3,12 @@ import os
 import stat
 import subprocess
 import sys
-from selenium import webdriver
+
 from selenium.common.exceptions import (
     NoSuchElementException, TimeoutException, WebDriverException
 )
-from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
   
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
@@ -136,26 +133,16 @@ class Driver:
     def _create_driver(self, url, cookie) -> Optional[webdriver.Firefox]:
         
 
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-        chrome_options.add_argument("--no-sandbox")  # Bypass OS security restrictions
-        chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
 
-        service = Service(ChromeDriverManager().install())
-       
-
-        # Create WebDriver instance
-        
-
-        # service = None
-        # if self.geckodriver_path:
-        #      print("Assigning the service:({self.geckodriver_path})")
-        #      service = FirefoxService(executable_path=self.geckodriver_path)
+        options.headless = True
 
         driver = None
         try:
             print("Initializing Chrome WebDriver...")
-            driver = webdriver.Chrome(service=service, options=chrome_options)
+            driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
             print("WebDriver initialized. Navigating to initial URL...")
             driver.get(url) # Initial navigation
             print(f"Initial navigation to {url} complete.")
