@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import google_colab_selenium as gs
 from typing import List, Optional # Added for type hinting
 
 # Function to install dependencies in Colab
@@ -133,16 +134,16 @@ class Driver:
     def _create_driver(self, url, cookie) -> Optional[webdriver.Firefox]:
         
 
-        options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
+        # options = Options()
+        # options.add_argument("--headless")
+        # options.add_argument("--no-sandbox")
 
         #options.headless = True
 
         driver = None
         try:
             print("Initializing Chrome WebDriver...")
-            driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver", options=options)
+            driver = gs.Chrome()
             print("WebDriver initialized. Navigating to initial URL...")
             driver.get(url) # Initial navigation
             print(f"Initial navigation to {url} complete.")
