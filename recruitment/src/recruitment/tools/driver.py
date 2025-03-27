@@ -137,7 +137,7 @@ class Driver:
         options.add_argument("--headless")
         options.add_argument("--no-sandbox")
 
-        options.headless = True
+        #options.headless = True
 
         driver = None
         try:
