@@ -42,7 +42,7 @@ from typing import List, Optional # Added for type hinting
 
 class Driver:
     def __init__(self, url, cookie=None):
-        self.driver: Optional[webdriver.Firefox] = None # Initialize driver as None
+        self.driver: Optional[webdriver.Chrome] = None # Initialize driver as None
         self.geckodriver_path: Optional[str] = None
         #self.geckodriver_path = install_dependencies()
         # If installation failed in Colab, don't proceed
@@ -142,7 +142,7 @@ class Driver:
         driver = None
         try:
             print("Initializing Chrome WebDriver...")
-            driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
+            driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver", options=options)
             print("WebDriver initialized. Navigating to initial URL...")
             driver.get(url) # Initial navigation
             print(f"Initial navigation to {url} complete.")
